@@ -3,17 +3,17 @@ from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import OllamaLLM
 
-# === Load Vector DB ===
+# Load Vector DB 
 embedding = HuggingFaceEmbeddings(model_name="BAAI/bge-large-en-v1.5")
 vectordb = Chroma(
     persist_directory="embeddings",
     embedding_function=embedding
 )
 
-# === Local LLM ===
+# Local LLM 
 llm = OllamaLLM(model="phi3:medium")
 
-#  Synonym map for common layman → medical terms
+#  Synonym map 
 SYNONYM_MAP = {
     "heart attack": "myocardial infarction",
     "stroke": "cerebrovascular accident",
@@ -24,7 +24,7 @@ SYNONYM_MAP = {
     "german measles": "rubella",
 }
 
-# === Retrieval Logic ===
+# Retrieval
 def retrieve_icd_context(query, top_k=4):
     """Retrieve top_k ICD-11 context chunks with semantic + fuzzy expansion."""
 
@@ -51,17 +51,17 @@ def retrieve_icd_context(query, top_k=4):
     combined_context = "\n\n".join([doc.page_content for doc in docs])
     return combined_context.strip(), docs
 
-# === Core Medical QA ===
+
 def medical_chat(user_message, history):
     history = history or []
 
-    # Retrieve ICD-11 context
+ 
     context, docs = retrieve_icd_context(user_message, top_k=4)
 
     if not context or len(context) < 50:
-        answer = "❌ I couldn’t find an exact ICD-11 match for your query. Try rephrasing or be more specific."
+        answer = " I couldn’t find an exact ICD-11 match for your query. Try rephrasing or be more specific."
     else:
-        # Smarter prompt that allows partial matches
+        
         prompt = f"""
 You are a WHO ICD-11 medical assistant.
 - Use ONLY the provided ICD-11 context for accuracy.
@@ -95,7 +95,7 @@ Answer in a clear, medical style:
 
     return history, history
 
-# === Modern UI with Loader ===
+# Modern UI with Loader 
 with gr.Blocks(theme=gr.themes.Soft(), css="""
 #chatbox {height: 500px !important;}
 #loading_circle {display:none; text-align:center;}
@@ -121,7 +121,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css="""
         clear_btn = gr.Button(" Clear")
 
     # Circular loader while processing
-    loading_circle = gr.Markdown("⏳ *Processing your query...*", elem_id="loading_circle")
+    loading_circle = gr.Markdown(" *Processing your query...*", elem_id="loading_circle")
 
     # Submit event → show loader, run chat, then hide loader
     def show_loader():
