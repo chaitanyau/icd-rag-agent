@@ -1,4 +1,4 @@
-# 🏥 ICD-11 RAG Medical Assistant
+#  ICD-11 RAG Medical Assistant
 
 An **AI-powered ICD-11 Medical Assistant** that retrieves official WHO ICD-11 definitions, synonyms, and related info using **semantic search** + **local LLM reasoning**.
 
