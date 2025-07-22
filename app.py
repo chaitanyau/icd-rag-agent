@@ -102,7 +102,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css="""
 """) as demo:
     gr.Markdown(
         """
-        <h1 style="text-align:center;">🏥 ICD-11 Medical Assistant</h1>
+        <h1 style="text-align:center;"> ICD-11 Medical Assistant</h1>
         <p style="text-align:center;">
         <b>Answers WHO ICD-11 definitions, symptoms, and conditions.</b>  
         <i>Now with semantic search (handles layman terms like "heart attack")</i>
